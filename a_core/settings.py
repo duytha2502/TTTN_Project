@@ -180,3 +180,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'duythai2502@gmail.com'
 EMAIL_HOST_PASSWORD = 'wtjv ityr qyjc vbob'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
