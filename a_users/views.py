@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from allauth.account.utils import send_email_confirmation
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import redirect_to_login
 from django.contrib import messages
 from .forms import *
+from allauth.account.views import PasswordChangeView
+ 
 
 def profile_view(request, username=None):
     if username:
@@ -91,3 +93,12 @@ def profile_delete_view(request):
         return redirect('home')
     
     return render(request, 'a_users/profile_delete.html')
+
+class CustomPasswordChangeView(PasswordChangeView):
+    success_url = reverse_lazy('profile')  # Tên URL bạn muốn chuyển hướng tới
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        # Nếu bạn muốn thực hiện các logic khác trước khi chuyển hướng
+        return response
+    
