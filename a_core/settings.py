@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'a_home',
     'a_users',
     'a_rtchat',
+    'channels',
 ]
 
 SITE_ID = 1
@@ -92,20 +93,20 @@ TEMPLATES = [
 
 ASGI_APPLICATION = 'a_core.asgi.application'
 
-# CHANNEL_LAYERS  = {
-#     'default': {
-#         "BACKEND": "channels.layers.InMemoryChannelLayer",
-#     }   
-# }
-
 CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [('redis://default:dTiFjKiDDXGGpeYfhGHHaIiyIqgWMtZj@junction.proxy.rlwy.net:46764')],
-        },
-    },
+    'default': {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    }   
 }
+
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [('redis://default:dTiFjKiDDXGGpeYfhGHHaIiyIqgWMtZj@junction.proxy.rlwy.net:46764')],
+#         },
+#     },
+# }
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -179,5 +180,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'duythai2502@gmail.com'
 EMAIL_HOST_PASSWORD = 'wtjv ityr qyjc vbob'
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 
