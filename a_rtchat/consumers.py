@@ -10,7 +10,7 @@ class ChatroomConsumer(WebsocketConsumer):
         self.user = self.scope['user']
         self.chatroom_name = self.scope['url_route']['kwargs']['chatroom_name']
         self.chatroom = get_object_or_404(ChatGroup, group_name=self.chatroom_name)
-
+        
         async_to_sync(self.channel_layer.group_add)(
             self.chatroom_name, self.channel_name
         )
@@ -57,7 +57,8 @@ class ChatroomConsumer(WebsocketConsumer):
         message = GroupMessage.objects.get(id=message_id)
         context = {
             'message' : message,
-            'user' : self.user
+            'user' : self.user,
+            'chat_group': self.chatroom
         }
         html = render_to_string("a_rtchat/partials/chat_message_p.html", context=context)
         self.send(text_data=html)
@@ -75,6 +76,9 @@ class ChatroomConsumer(WebsocketConsumer):
 
     def online_count_handler(self, event):
         online_count = event['online_count']
-        html = render_to_string("a_rtchat/partials/online_count.html", {'online_count': online_count})
+        context = {
+            'online_count' : online_count,
+            'chat_group' : self.chatroom
+        }
+        html = render_to_string("a_rtchat/partials/online_count.html", context)
         self.send(text_data=html)
-      
