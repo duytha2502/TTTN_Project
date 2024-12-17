@@ -182,3 +182,17 @@ def chat_file_upload(request, chatroom_name):
         )
     return HttpResponse()
 
+@login_required
+def delete_message(request, chatroom_name, message_id):
+    # Lấy nhóm chat hiện tại
+    chat_group = get_object_or_404(ChatGroup, group_name=chatroom_name)
+
+    # Lấy tin nhắn cần xóa
+    message = get_object_or_404(GroupMessage, id=message_id, group=chat_group)
+
+    # Xóa tin nhắn
+    message.delete()
+    messages.success(request, 'Message deleted successfully')
+
+    return redirect('chatroom', chatroom_name=chatroom_name)
+
